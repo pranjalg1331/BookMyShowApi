@@ -6,6 +6,13 @@ from rest_framework import status
 from .models import Slot
 from rest_framework.decorators import action
 from rest_framework.views import APIView
+from rest_framework import generics
+
+class MuseumSlotListView(generics.ListAPIView):
+    serializer_class = SlotSerializer
+    def get_queryset(self):
+        museum_name = self.kwargs['museum_name']
+        return Slot.objects.filter(museum__name=museum_name)
 
 class MuseumViewSet(viewsets.ModelViewSet):
     queryset = Museum.objects.all()

@@ -8,9 +8,11 @@ class Museum(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     description = models.TextField()
+    image = models.ImageField(upload_to='museum_images/', null=True, blank=True)
 
     def __str__(self):
         return self.name
+
 
 class Slot(models.Model):
     museum = models.ForeignKey(Museum, related_name='slots', on_delete=models.CASCADE)
@@ -23,10 +25,11 @@ class Slot(models.Model):
         return f"{self.museum.name} - {self.start_time} to {self.end_time}"
 
 class Ticket(models.Model):
-    slot = models.ForeignKey(Slot, related_name='tickets', on_delete=models.CASCADE)
+    slot = models.ForeignKey(Slot, related_name='tickets', on_delete=models.CASCADE,default="")
     user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE)
     booked_at = models.DateTimeField(auto_now_add=True)
-    # qr_code = models.ImageField(upload_to='qr_codes/', blank=True)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True)
+    venue=models.CharField(max_length=50,default="")
 
     # def save(self, *args, **kwargs):
     #     qr = qrcode.QRCode(
