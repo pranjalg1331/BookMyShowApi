@@ -28,7 +28,7 @@ class Ticket(models.Model):
     slot = models.ForeignKey(Slot, related_name='tickets', on_delete=models.CASCADE,default="")
     user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE)
     booked_at = models.DateTimeField(auto_now_add=True)
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True)
+    qr_code = models.IntegerField(max_length=1000,default=0)
     venue=models.CharField(max_length=50,default="")
 
     # def save(self, *args, **kwargs):
